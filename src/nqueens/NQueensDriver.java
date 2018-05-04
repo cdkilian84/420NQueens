@@ -24,10 +24,14 @@ public class NQueensDriver {
         double averageIterations;
         
         
+        int[][] testing = {{1,2}, {3,4}};
+        System.out.println(testing[0][1]);
+        
+        
         //printBoard(boardDimension, queens);
-        double x = 200.00;
+        double x = 0.1;
         int count = 0;
-        while(x > 0.00001){
+        while(x > 0.0000001){
             x = 0.98*x;
             count++;
         }
@@ -49,7 +53,7 @@ public class NQueensDriver {
 //        printBoard(boardDimension, test.getBestBoard().getBoardStatus());
         while(trys < 1000){
             board = new ChessBoard(boardDimension);
-            test = new NQueens(board);
+            test = new NQueensSimAn(board);
             test.solveBoard();
             trys++;
             if(test.checkIfSolved()){
