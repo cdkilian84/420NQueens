@@ -5,6 +5,10 @@
  */
 package nqueens;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
  * @author Chris
@@ -24,25 +28,42 @@ public class NQueensDriver {
         double averageIterations;
         
         
-        int[][] testing = {{1,2}, {3,4}};
-        System.out.println(testing[0][1]);
+//        List<ChessBoard> tempTest = new ArrayList<>();
+//        tempTest.add(new ChessBoard(21));
+//        tempTest.add(new ChessBoard(21));
+//        tempTest.add(new ChessBoard(21));
+//        tempTest.add(new ChessBoard(21));
+//        tempTest.add(new ChessBoard(21));
+//        for(int i = 0; i < 5; i++){
+//            double val = 0.1 + i;
+//            tempTest.get(i).setFitness(val);
+//        }
+//        Collections.shuffle(tempTest);
+//        System.out.println("Initially:");
+//        for(int i = 0; i < 5; i++){
+//            System.out.println("Board fitness: " + tempTest.get(i).getFitness());
+//        }
+//        System.out.println("After Sorting:");
+//        Collections.sort(tempTest, new SortByFitness());
+//        for(int i = 0; i < 5; i++){
+//            System.out.println("Board fitness: " + tempTest.get(i).getFitness());
+//        }
         
         
         //printBoard(boardDimension, queens);
-        double x = 0.1;
-        int count = 0;
-        while(x > 0.0000001){
-            x = 0.98*x;
-            count++;
-        }
-        System.out.println("Count: " + count);
+//        double x = 0.1;
+//        int count = 0;
+//        while(x > 0.0000001){
+//            x = 0.98*x;
+//            count++;
+//        }
+//        System.out.println("Count: " + count);
         
         System.out.println("Number of attacking queens is: " + board.getNumAttacking());
         
-        NQueens test;// = new NQueens(board);
+        NQueens test = null;
         System.out.println("Attempting to solve...");
-        //test.solveBoard();
-        //trys++;
+
 //        if(test.checkIfSolved()){
 //            System.out.println("Board was solved!");
 //        }else{
@@ -51,9 +72,10 @@ public class NQueensDriver {
 //        System.out.println("Number of tests: " + test.getTestIterations());
 //        System.out.println("Final board configuration:");
 //        printBoard(boardDimension, test.getBestBoard().getBoardStatus());
-        while(trys < 1000){
+        while(trys < 100){
             board = new ChessBoard(boardDimension);
-            test = new NQueensSimAn(board);
+            //test = new NQueensSimAn(board);
+            test = new NQueensGenetic(board);
             test.solveBoard();
             trys++;
             if(test.checkIfSolved()){
@@ -71,6 +93,7 @@ public class NQueensDriver {
         System.out.println("Total solved: " + solved);
         averageIterations = totalIterations/solved;
         System.out.println("Average iterations for solution: " + averageIterations);
+        printBoard(boardDimension, test.getBestBoard().getBoardStatus());
         
     }
     

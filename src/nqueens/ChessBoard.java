@@ -14,6 +14,8 @@ import java.util.Random;
 public class ChessBoard {
     private int boardDimension;
     private int numAttackingQueens;
+    private int numNonAttackingQueens;
+    private double fitness; //a "fitness" value which can be assigned by outside operators depending on needs
     private Queen[] queens;
     private final int DEFAULT_DIMENSION = 21;
     
@@ -25,6 +27,8 @@ public class ChessBoard {
             boardDimension = DEFAULT_DIMENSION;
         }
         this.numAttackingQueens = 0;
+        this.numNonAttackingQueens = 0;
+        this.fitness = 0.0;
         queens = new Queen[boardDimension];
         initBoard();
         evalBoard();
@@ -43,6 +47,8 @@ public class ChessBoard {
         }
         
         this.numAttackingQueens = 0;
+        this.numNonAttackingQueens = 0;
+        this.fitness = 0.0;
         evalBoard();
     }
     
@@ -61,10 +67,15 @@ public class ChessBoard {
     //Counts pairs of attacking queens (pair is not double counted)
     private void evalBoard(){
         for(int i = 0; i < boardDimension; i++){
+            boolean attacking = false;
             for(int j = i+1; j < boardDimension; j++){
                 if(queens[i].checkAttack(queens[j])){
                     numAttackingQueens++;
+                    attacking = true;
                 }
+            }
+            if(!attacking){
+                numNonAttackingQueens++;
             }
         }
     }
@@ -110,6 +121,29 @@ public class ChessBoard {
     
     public Queen[] getBoardStatus(){
         return queens;
+    }
+
+    /**
+     * @return the fitness
+     */
+    public double getFitness() {
+        return fitness;
+    }
+
+    /**
+     * @param fitness the fitness to set
+     */
+    public void setFitness(double fitness) {
+        if(fitness >= 0){
+            this.fitness = fitness;
+        }
+    }
+
+    /**
+     * @return the numNonAttackingQueens
+     */
+    public int getNumNonAttackingQueens() {
+        return numNonAttackingQueens;
     }
     
     
