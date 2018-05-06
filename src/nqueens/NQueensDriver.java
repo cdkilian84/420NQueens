@@ -4,101 +4,85 @@
 
 package nqueens;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
-/**
- *
- * @author Chris
- */
+//Driver class for the NQueens project - this driver is set up to run 1000 tests on both simulated annealing and genetic algorithms for
+//a 21 queens problem and display the results of these tests. To see the printout of a final board state (the last one tested) for each algorithm,
+//uncomment the "printBoard" lines.
 public class NQueensDriver {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         int boardDimension = 21;
-        ChessBoard board = new ChessBoard(boardDimension);
-        Queen[] queens = board.getBoardStatus();
+        ChessBoard board;
         int trys = 0;
         int solved = 0;
         double totalIterations = 0.0;
-        double averageIterations;
+        double averageIterations = 0.0;
+        long totalTime = 0;
+        NQueens test = null;
         
-//        Random rand = new Random();
-//        for(int i = 0; i < 100; i++){
-//            double randomVal = rand.nextDouble() * (0.75);
-//            System.out.println("randomVal is " + randomVal);
-//        }
+        //Run the test for simulated annealing 1000 times and get averages
+        System.out.println("Running 1000 tests with Simulated Annealing...");
+        while(trys < 1000){
+            board = new ChessBoard(boardDimension);
+            test = new NQueensSimAn(board);
+            long startTime = System.nanoTime();
+            test.solveBoard();
+            long elapsedTimeNanos = System.nanoTime() - startTime;
+            totalTime += elapsedTimeNanos;
+            trys++;
+            if(test.checkIfSolved()){
+                solved++;
+                totalIterations += test.getTestIterations();
+            }
+        }
+        long avgTime = totalTime / trys;
         
-//        List<ChessBoard> tempTest = new ArrayList<>();
-//        tempTest.add(new ChessBoard(21));
-//        tempTest.add(new ChessBoard(21));
-//        tempTest.add(new ChessBoard(21));
-//        tempTest.add(new ChessBoard(21));
-//        tempTest.add(new ChessBoard(21));
-//        for(int i = 0; i < 5; i++){
-//            double val = 0.1 + i;
-//            tempTest.get(i).setFitness(val);
-//        }
-//        Collections.shuffle(tempTest);
-//        System.out.println("Initially:");
-//        for(int i = 0; i < 5; i++){
-//            System.out.println("Board fitness: " + tempTest.get(i).getFitness());
-//        }
-//        System.out.println("After Sorting:");
-//        Collections.sort(tempTest, new SortByFitness());
-//        for(int i = 0; i < 5; i++){
-//            System.out.println("Board fitness: " + tempTest.get(i).getFitness());
-//        }
+        //printBoard(boardDimension, test.getBestBoard().getBoardStatus());
+        if(solved > 0){
+            averageIterations = totalIterations/solved;
+        }
+        System.out.println("Total trys: " + trys);
+        System.out.println("Total solved: " + solved);
+        System.out.println("Average iterations for solution: " + averageIterations);
+        System.out.println("Average time for solution (ns): " + avgTime + "\n\n");
+        //printBoard(boardDimension, test.getBestBoard().getBoardStatus());
         
+        //reset for Genetic algorithm
+        trys = 0;
+        solved = 0;
+        totalIterations = 0.0;
+        averageIterations = 0.0;
+        totalTime = 0;
+        avgTime = 0;
         
-        //printBoard(boardDimension, queens);
-//        double x = 0.1;
-//        int count = 0;
-//        while(x > 0.0000001){
-//            x = 0.98*x;
-//            count++;
-//        }
-//        System.out.println("Count: " + count);
+        System.out.println("Running 1000 tests with Genetic algorithm...");
+        while(trys < 1000){
+            test = new NQueensGenetic(boardDimension);
+            long startTime = System.nanoTime();
+            test.solveBoard();
+            long elapsedTimeNanos = System.nanoTime() - startTime;
+            totalTime += elapsedTimeNanos;
+            trys++;
+            if(test.checkIfSolved()){
+                solved++;
+                totalIterations += test.getTestIterations();
+            }
+        }
+        avgTime = totalTime / trys;
+        if(solved > 0){
+            averageIterations = totalIterations/solved;
+        }
         
-//        NQueens test = null;
-//        System.out.println("Attempting to solve...");
-//        long totalTime = 0;
-//        
-//        
-//
-//        while(trys < 500){
-//            board = new ChessBoard(boardDimension);
-//            //test = new NQueensSimAn(board);
-//            test = new NQueensGenetic(boardDimension, 100, 0.3);
-//            long startTime = System.nanoTime();
-//            test.solveBoard();
-//            long elapsedTimeNanos = System.nanoTime() - startTime;
-//            totalTime += elapsedTimeNanos;
-//            trys++;
-//            if(test.checkIfSolved()){
-//                solved++;
-//                totalIterations += test.getTestIterations();
-//            }
-//        }
-//        long avgTime = totalTime / trys;
-//        
-//        printBoard(boardDimension, test.getBestBoard().getBoardStatus());
-//        System.out.println("Total trys: " + trys);
-//        System.out.println("Total solved: " + solved);
-//        averageIterations = totalIterations/solved;
-//        System.out.println("Average iterations for solution: " + averageIterations);
-//        System.out.println("Average time for solution (ns):" + avgTime);
-        
-        Finder findBestResults = new Finder();
-        findBestResults.runTest();
-
+        System.out.println("Total trys: " + trys);
+        System.out.println("Total solved: " + solved);
+        System.out.println("Average iterations for solution: " + averageIterations);
+        System.out.println("Average time for solution (ns): " + avgTime);
+        //printBoard(boardDimension, test.getBestBoard().getBoardStatus());
         
     }
     
+    
+    //Method to print out a visual representation of the ChessBoard
     public static void printBoard(int boardDimension, Queen[] queens){
         for(int i = boardDimension-1; i >= 0; i--){
             StringBuilder boardRow = new StringBuilder();

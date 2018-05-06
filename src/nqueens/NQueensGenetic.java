@@ -13,24 +13,15 @@ import java.util.Random;
 //maximum number of iterations allowed, and the mutation chance.
 public class NQueensGenetic extends NQueens{
     
-    private int POP_SIZE; //= 16;
+    //population size, mutation chance, and max time to run are all set here - optimal combination found through trial-and-error
+    private final int POP_SIZE = 16;
     private final int MAX_TIME_TO_RUN = 65000;
-    private double MUTATION_CHANCE; //= 0.25;
+    private final double MUTATION_CHANCE = 0.27;
 
     //Constructor accepting an integer representing the dimensions of the boards to be tested.
     //Passes a random ChessBoard to the superclass using this dimension, though this board is just a placeholder at this point.
     public NQueensGenetic(int dimension) {
         super(new ChessBoard(dimension));
-        //TEMP
-        POP_SIZE = 16;
-        MUTATION_CHANCE = 0.25;
-    }
-    
-    //for testing best values
-    public NQueensGenetic(int dimension, int popSize, double mutation) {
-        super(new ChessBoard(dimension));
-        this.POP_SIZE = popSize;
-        this.MUTATION_CHANCE = mutation;
     }
 
     
@@ -51,13 +42,16 @@ public class NQueensGenetic extends NQueens{
             
             
             while(newPopulation.size() < POP_SIZE){
+                //randomly select 2 parents from the population
                 ChessBoard firstSelected = randomSelection(population);
                 ChessBoard secondSelected = randomSelection(population);
                 
+                //produce 2 children from the parents
                 ChessBoard[] children = reproduce(firstSelected, secondSelected);
                 
+                //process both of the returned children from the reproduction method
                 for(ChessBoard child : children){
-                    super.incrementIterations();
+                    super.incrementIterations(); //iterations correspnd to children generated
                     //check for solution before mutation
                     if(child.getNumAttacking() == 0){
                         super.setBestBoard(child);

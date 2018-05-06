@@ -1,23 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//Christopher Kilian
+//CS 420 - Spring 2018
+//Programming Project 2 - N-Queens
+
 package nqueens;
 
 import java.io.File;
 import java.io.PrintWriter;
 
-/**
- *
- * @author Chris
- */
+//Class built to run tests on the Genetic Algorithm and discover the optimal population size and mutation rate ratio.
+//Included here for completenss sake, but this won't actually work without modifying the NQueensGenetic class to allow for a constructor
+//which can set the pop size and mutation rate. This class serves no real purpose to the final product however.
 public class Finder {
     
     private static int START_POP_RANGE = 10;
     private static int END_POP_RANGE = 90;
-    private static double START_MUTATION_RANGE = 0.09;
-    private static double END_MUTATION_RANGE = 0.45;
+    private static double START_MUTATION_RANGE = 0.06;
+    private static double END_MUTATION_RANGE = 0.42;
     
     public void runTest(){
         
@@ -34,8 +32,9 @@ public class Finder {
                 int totalIterations = 0;
                 long totalTime = 0;
                 
-                while(trys < 800){
-                    test = new NQueensGenetic(21, i, mutation);
+                while(trys < 1000){
+                    //get a new Genetic testing object by passing population size and mutation rate to it
+                    //test = new NQueensGenetic(21, i, mutation);
                     long startTime = System.nanoTime();
                     test.solveBoard();
                     long elapsedTimeNanos = System.nanoTime() - startTime;
