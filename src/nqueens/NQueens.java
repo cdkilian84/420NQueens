@@ -1,74 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//Christopher Kilian
+//CS 420 - Spring 2018
+//Programming Project 2 - N-Queens
+
 package nqueens;
 
 import java.util.Random;
 
-/**
- *
- * @author Chris
- */
+//Top level class for the NQueens problem solver. This level of the class holds the "best" board seen so far (which in a solved puzzle will be the solution state
+//board), the dimensions for the board puzzle being solved, and the number of iterations (corresponding to children generated) a particular test takes.
+//Concrete sub-classes of this superclass must implement the "solveBoard" method using whatever algorithm is needed.
 public abstract class NQueens {
     private ChessBoard bestBoard;
     private int dimensions;
     private int testIterations;
     
+    //Constructor to initialize values
     public NQueens(ChessBoard startingBoard){
         bestBoard = startingBoard;
         dimensions = startingBoard.getBoardDimensions();
         testIterations = 0;
     }
     
+    
+    //Abstract method representing the action of solving a given NQueens puzzle - to be implemented by subclasses
     public abstract void solveBoard();
     
-    //simulated annealing
-//    public void solveBoard(){
-//        double temperature = 0.1;
-//        
-//        while(temperature > 0.0000001){
-//            
-//            boolean improved = false;
-//            ChessBoard acceptedInIteration = bestBoard;
-//            for(int i = 0; i < 50; i++){
-//                testIterations++;
-//                ChessBoard randomBoard = getSuccessor(bestBoard);
-//                int valDiff = acceptedInIteration.getNumAttacking() - randomBoard.getNumAttacking();
-//                //System.out.println("valDiff is " + valDiff);
-//                if(valDiff > 0){
-//                    acceptedInIteration = randomBoard;
-//                    improved = true;
-//                }else{
-//                    double probability = Math.exp(valDiff/temperature);
-//                    Random rand = new Random();
-//                    double randomVal = rand.nextDouble();
-//                    //System.out.println("probability is " + probability);
-//                    if(randomVal < probability){
-//                        acceptedInIteration = randomBoard;
-//                        improved = true;
-//                        //System.out.println("Accepting bad move!");
-//                    }
-//                }
-//
-//                if(acceptedInIteration.getNumAttacking() == 0){
-//                    bestBoard = acceptedInIteration;
-//                    break;
-//                }
-//            }
-//            
-//            if(improved){
-//                bestBoard = acceptedInIteration;
-//            }
-//            if(checkIfSolved()){
-//                break;
-//            }
-//            temperature = 0.98 * temperature;
-//        }
-//    }
     
-    
+    //Method to get a "successor" board to a provided board state - a "successor" is a board which can be produced by moving one queen
+    //in the indicated "parent" board some number of spaces. This method will randomly pick a piece to move and the number of spaces to move it,
+    //and then return a new ChessBoard with that piece moved.
     protected ChessBoard getSuccessor(ChessBoard board){
         Random rand = new Random();
         int pieceToMove = rand.ints(0, getDimensions()).limit(1).findFirst().getAsInt();
@@ -78,6 +38,8 @@ public abstract class NQueens {
     }
     
     
+    //A check to see if the current "best board" is a solution state - a solved board is one with no attacking queen pairs.
+    //Returns true if the best board is a solution state.
     public boolean checkIfSolved(){
         boolean solved = false;
         
@@ -88,30 +50,29 @@ public abstract class NQueens {
         return solved;
     }
 
-    /**
-     * @return the bestBoard
-     */
+    //Getter for the best board
     public ChessBoard getBestBoard() {
         return bestBoard;
     }
     
+    //Getter for test iterations
     public int getTestIterations(){
         return testIterations;
     }
     
-    protected void incrementIterations(){
-        testIterations++;
-    }
-    
-    protected void setBestBoard(ChessBoard board){
-        bestBoard = board;
-    }
-
-    /**
-     * @return the dimensions
-     */
+    //Getter for this test's dimensions
     public int getDimensions() {
         return dimensions;
     }
     
+    //Method to be used by subclasses to increment the iterations taken by a solution test
+    protected void incrementIterations(){
+        testIterations++;
+    }
+    
+    //Method to be used by subclasses to swap out the current best board with a new one
+    protected void setBestBoard(ChessBoard board){
+        bestBoard = board;
+    }
+
 }

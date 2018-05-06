@@ -1,13 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//Christopher Kilian
+//CS 420 - Spring 2018
+//Programming Project 2 - N-Queens
+
 package nqueens;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -27,6 +27,11 @@ public class NQueensDriver {
         double totalIterations = 0.0;
         double averageIterations;
         
+//        Random rand = new Random();
+//        for(int i = 0; i < 100; i++){
+//            double randomVal = rand.nextDouble() * (0.75);
+//            System.out.println("randomVal is " + randomVal);
+//        }
         
 //        List<ChessBoard> tempTest = new ArrayList<>();
 //        tempTest.add(new ChessBoard(21));
@@ -59,41 +64,38 @@ public class NQueensDriver {
 //        }
 //        System.out.println("Count: " + count);
         
-        System.out.println("Number of attacking queens is: " + board.getNumAttacking());
-        
-        NQueens test = null;
-        System.out.println("Attempting to solve...");
-
-//        if(test.checkIfSolved()){
-//            System.out.println("Board was solved!");
-//        }else{
-//            System.out.println("UNABLE TO SOLVE BOARD");
+//        NQueens test = null;
+//        System.out.println("Attempting to solve...");
+//        long totalTime = 0;
+//        
+//        
+//
+//        while(trys < 500){
+//            board = new ChessBoard(boardDimension);
+//            //test = new NQueensSimAn(board);
+//            test = new NQueensGenetic(boardDimension, 100, 0.3);
+//            long startTime = System.nanoTime();
+//            test.solveBoard();
+//            long elapsedTimeNanos = System.nanoTime() - startTime;
+//            totalTime += elapsedTimeNanos;
+//            trys++;
+//            if(test.checkIfSolved()){
+//                solved++;
+//                totalIterations += test.getTestIterations();
+//            }
 //        }
-//        System.out.println("Number of tests: " + test.getTestIterations());
-//        System.out.println("Final board configuration:");
+//        long avgTime = totalTime / trys;
+//        
 //        printBoard(boardDimension, test.getBestBoard().getBoardStatus());
-        while(trys < 100){
-            board = new ChessBoard(boardDimension);
-            //test = new NQueensSimAn(board);
-            test = new NQueensGenetic(board);
-            test.solveBoard();
-            trys++;
-            if(test.checkIfSolved()){
-                solved++;
-                totalIterations += test.getTestIterations();
-            }
-            //System.out.println("Test failed - trying again...");
-            //System.out.println("Failed with " + test.getTestIterations() + " iterations");
-        }
-        //System.out.println("Solution found in " + trys + " number of trys.");
-        //System.out.println("Number of tests: " + test.getTestIterations());
-        //System.out.println("Final board configuration:");
-        //printBoard(boardDimension, test.getBestBoard().getBoardStatus());
-        System.out.println("Total trys: " + trys);
-        System.out.println("Total solved: " + solved);
-        averageIterations = totalIterations/solved;
-        System.out.println("Average iterations for solution: " + averageIterations);
-        printBoard(boardDimension, test.getBestBoard().getBoardStatus());
+//        System.out.println("Total trys: " + trys);
+//        System.out.println("Total solved: " + solved);
+//        averageIterations = totalIterations/solved;
+//        System.out.println("Average iterations for solution: " + averageIterations);
+//        System.out.println("Average time for solution (ns):" + avgTime);
+        
+        Finder findBestResults = new Finder();
+        findBestResults.runTest();
+
         
     }
     

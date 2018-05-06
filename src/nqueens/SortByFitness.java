@@ -1,17 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//Christopher Kilian
+//CS 420 - Spring 2018
+//Programming Project 2 - N-Queens
+
 package nqueens;
 
 import java.util.Comparator;
 
-//Simple comparator for two chessboard objects, based on their fitness values
+//Simple comparator for two chessboard objects, based on their fitness values (results in descending ordered lists)
 //For use in the Genetic algorithm
 public class SortByFitness implements Comparator<ChessBoard>{
-    // Used for sorting in ascending order of
-    // roll name
+
     @Override
     public int compare(ChessBoard a, ChessBoard b){
         int comp = 0;
